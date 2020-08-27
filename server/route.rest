@@ -1,0 +1,13 @@
+GET http://localhost:5000/songs
+
+###
+
+POST http://localhost:5000/songs
+Content-Type: application/json
+{     
+    "title": "Test1",
+    "artist": "Test1",
+    "songSource": "Test1",
+    "imageSource": "Test1"
+}
+
