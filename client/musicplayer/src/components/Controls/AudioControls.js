@@ -19,7 +19,7 @@ const audioFile = new Audio();
 // Variable to track and manipulate current song
 let songNum = 0
 
-const AudioControls = ({togglePlay, nextSong, isPaused, allSongs, shuffle, currentSong={}}) => {
+const AudioControls = ({togglePlay, nextSong, isPaused, allSongs=[], shuffle, currentSong={}}) => {
 
     // Assigning state hook for play/pause icon to be displayed
     const [playIcon, setPlayIcon] = useState(<PlayArrowIcon/>)
@@ -30,6 +30,7 @@ const AudioControls = ({togglePlay, nextSong, isPaused, allSongs, shuffle, curre
         if(songNum === allSongs.length-1) {
             songNum = 0; // When end of song array go to back to first song in list
         } 
+        // songNum = songNum++;
         songNum++; // Increment song number
         nextSong(songNum) // Update current song using nextSong slice method
         
@@ -41,6 +42,7 @@ const AudioControls = ({togglePlay, nextSong, isPaused, allSongs, shuffle, curre
         if(songNum === 0 ) {
             songNum = allSongs.length; // When song array reaches the start go to the end of the song list
         } 
+            // songNum = songNum--;
             songNum-- // Decrement song number
             nextSong(songNum) // Decrement current song using nextSong slice method
         

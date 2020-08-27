@@ -22,6 +22,8 @@ import Button from'@material-ui/core/Button'
 import TextField from'@material-ui/core/TextField'
 
 // Method for creating the data for the table
+
+
 function createData(_id, title, artist) {
 return { _id, title, artist };
 }
@@ -390,4 +392,4 @@ const mapStateToProps = state => ({
     allSongs: state.allSongs
 })
 
-export default connect(mapStateToProps)(SongsTable);
+export default connect(mapStateToProps)(SongsTable, EnhancedTableHead, EnhancedTableToolbar);

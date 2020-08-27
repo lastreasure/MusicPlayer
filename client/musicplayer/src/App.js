@@ -3,6 +3,7 @@ import AudioControls from './components/Controls/AudioControls';
 import SongImage from './components/SongDisplay/SongImage';
 import Header from './components/Layout/Header';
 import SongsTable from './components/SongDisplay/SongsTable'
+// import SongTable from './components/SongDisplay/SongTable'
 // Redux imports
 import store from './store';
 import { getSongs, getPlaylists } from './store/slices';
@@ -53,10 +54,8 @@ function App()  {
         </Grid>
         <Grid item xs={12}>
           <SongsTable/>
+          {/* <SongTable/> */}
         </Grid>
-        {/* <Grid item xs={12}>
-          <Paper className={classes.paper}>xs=12</Paper>
-        </Grid> */}
       </Grid>
     </div>
   );
