@@ -22,21 +22,20 @@ function createData(_id, title, artist) {
     return { _id, title, artist};
 }
 
-const rows = [
-    createData('234321', 'Frozen yoghurt', "159"), 
-    createData('23424', 'Ice cream sandwich', "22"),
-];
-
 const SongTable = (allSongs = []) => {
+
     const classes = useStyles();
+
+    const rowsSongs = [];
+
+    allSongs.allSongs.forEach((song) => {
+        rowsSongs.push(createData(song._id, song.title, song.artist)) 
+    })
+
 
     // allSongs.map(song => {
     //     return <pre>{JSON.stringify(song)}</pre>
     // })
-
-    let songIds = [];
-
-
 
     return (
         <TableContainer component={Paper}>
@@ -48,7 +47,7 @@ const SongTable = (allSongs = []) => {
             </TableRow>
             </TableHead>
             <TableBody>
-            {allSongs.allSongs.map((song) => (
+            {rowsSongs.map((song) => (
                 <TableRow key={song._id}>
                 <TableCell component="th" scope="row">
                     {song.title}
