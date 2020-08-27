@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'; 
 
 import PropTypes from 'prop-types';
@@ -22,6 +22,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Button from'@material-ui/core/Button'
+import TextField from'@material-ui/core/TextField'
+
 
 function createData(_id, title, artist) {
 return { _id, title, artist };
@@ -239,7 +242,8 @@ const SongsTable = (allSongs = []) => {
         setSelected([]);
     };
 
-    const selectedIdList = [];
+    // state for selecting song id's to add to playlist
+    let [playlistSongIdList, setPlaylistSongIdList] = useState([]);
 
     const handleClick = (event, _id) => {
         const selectedIndex = selected.indexOf(_id);
@@ -260,12 +264,12 @@ const SongsTable = (allSongs = []) => {
 
         setSelected(newSelected);
 
-        ////////////////////////////////////
-            selectedIdList.push(selected);
-            console.log('select list: ' + selectedIdList) 
-            console.log(selected)
-        ////////////////////////////////////
+        // Collect selected song ids
+        setPlaylistSongIdList(prevState => [...prevState, selected])
+            console.log('this is songs: ' + playlistSongIdList);
+            console.log(typeof(playlistSongIdList))
     };
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -284,9 +288,47 @@ const SongsTable = (allSongs = []) => {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    /////////////////////////
-    console.log(isSelected)
-    ////////////////////////////
+
+    // Set state for playlist name
+    let [playlistNameText, setplaylistNameText] = useState('');
+
+    // Assign text state from text field for the playlist name
+    let handleTextFieldChange = (event) => {
+        setplaylistNameText(event.target.value);
+    }
+    console.log("this is playlist name:" + playlistNameText)
+
+
+    const createPlaylist = () => {
+        // turn object to array
+        var songsArr = playlistSongIdList.flat();
+        // Filter out duplicate song values
+        const uniqueSongsArr = songsArr.filter((val, id, array) => {
+                return array.indexOf(val) == id;  
+        });
+        console.log(uniqueSongsArr)
+
+        if (playlistNameText != '') {
+            fetch('http://localhost:5000/playlists', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    playlistName: playlistNameText,
+                    playlistSongId: uniqueSongsArr,
+                })
+            }).then(function() {
+                alert('playlist created')
+            }).catch(function(err) {
+                alert('error' + err)
+            })
+        } else {
+            alert('Cannot create playlist with no name')
+        }
+
+    }
 
     return (
         <div className={classes.root}>
@@ -358,6 +400,22 @@ const SongsTable = (allSongs = []) => {
             control={<Switch checked={dense} onChange={handleChangeDense} />}
             label="Dense padding"
         />
+
+            <TextField 
+            id="outlined-basic" 
+            label="Insert Playlist Name" 
+            variant="outlined" 
+            onChange={(e) => handleTextFieldChange(e)}
+            />
+
+            <Button 
+            variant="contained" 
+            color="primary"
+            onClick={(e) => createPlaylist()}
+            >
+                Create Playlist
+            </Button>
+
         </div>
     );
 }
