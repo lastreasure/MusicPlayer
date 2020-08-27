@@ -10,8 +10,6 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import ReplayIcon from '@material-ui/icons/Replay';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
-import Slider from '@material-ui/core/Slider';
-
 
 const audioFile = new Audio();
 let songNum = 0
@@ -83,7 +81,7 @@ const AudioControls = ({togglePlay, nextSong, isPaused, allSongs, shuffle, curre
 
 
             <Button id='replayButton' variant="contained" color="primary"
-                    onClick={() => {{replay()}}}>
+                    onClick={() => {replay()}}>
                 <ReplayIcon/>
             </Button>
 
@@ -106,10 +104,6 @@ const AudioControls = ({togglePlay, nextSong, isPaused, allSongs, shuffle, curre
                     onClick={() => {shuffle()}}>
                 <ShuffleIcon/>
             </Button>
-
-            {/* {allSongs.map(song => {
-                return <pre>{JSON.stringify(song)}</pre>
-            })} */}
 
         </div>
     )
