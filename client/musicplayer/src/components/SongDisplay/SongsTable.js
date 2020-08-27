@@ -242,8 +242,8 @@ const SongsTable = (allSongs = []) => {
         setSelected([]);
     };
 
-    // state for selecting song id's to add to playlist
-    let [playlistSongIdList, setPlaylistSongIdList] = useState([]);
+    // // state for selecting song id's to add to playlist
+    // let [playlistSongIdList, setPlaylistSongIdList] = useState([]);
 
     const handleClick = (event, _id) => {
         const selectedIndex = selected.indexOf(_id);
@@ -264,10 +264,10 @@ const SongsTable = (allSongs = []) => {
 
         setSelected(newSelected);
 
-        // Collect selected song ids
-        setPlaylistSongIdList(prevState => [...prevState, selected])
-            console.log('this is songs: ' + playlistSongIdList);
-            console.log(typeof(playlistSongIdList))
+        // // Collect selected song ids
+        // setPlaylistSongIdList(prevState => [...prevState, selected])
+        //     console.log('this is songs: ' + playlistSongIdList);
+        //     console.log(typeof(playlistSongIdList))
     };
 
 
@@ -300,15 +300,8 @@ const SongsTable = (allSongs = []) => {
 
 
     const createPlaylist = () => {
-        // turn object to array
-        var songsArr = playlistSongIdList.flat();
-        // Filter out duplicate song values
-        const uniqueSongsArr = songsArr.filter((val, id, array) => {
-                return array.indexOf(val) == id;  
-        });
-        console.log(uniqueSongsArr)
 
-        if (playlistNameText != '') {
+        if (playlistNameText != '' && selected.length > 0) {
             fetch('http://localhost:5000/playlists', {
                 method: 'POST',
                 headers: {
@@ -317,7 +310,7 @@ const SongsTable = (allSongs = []) => {
                 },
                 body: JSON.stringify({
                     playlistName: playlistNameText,
-                    playlistSongId: uniqueSongsArr,
+                    playlistSongId: selected,
                 })
             }).then(function() {
                 alert('playlist created')
@@ -325,7 +318,7 @@ const SongsTable = (allSongs = []) => {
                 alert('error' + err)
             })
         } else {
-            alert('Cannot create playlist with no name')
+            alert('Cannot create playlist with no name or no songs selected')
         }
 
     }
