@@ -1,9 +1,8 @@
 import React from 'react';
+import createActivityDetector from 'activity-detector'
 import { connect } from 'react-redux'; 
 
-// npm package for detecting activity for idle mode functionality
-import createActivityDetector from 'activity-detector'
-// Material UI imports
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,10 +10,11 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import IconButton from '@material-ui/core/IconButton'
+
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-// UI styling
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -70,22 +70,21 @@ const useStyles = makeStyles((theme) => ({
 const Header = (allSongs = []) => {
     const classes = useStyles();
 
-    // Function to implement idle mode
+    // Idle mode
     function useIdle(options) {
-        // React hook to change the state of whether the application should be in idle mode
         const [isIdle, setIdle] = React.useState(false)
-        
+        // Only render on mount
         React.useEffect((options) => {
-        const activityDetector = createActivityDetector(options) // Create activity detector with the inputed time params
-        activityDetector.on('idle', () => setIdle(true)) // When idle/inactive set idle state to true
-        activityDetector.on('active', () => setIdle(false)) // When active set idle state to false
-        // Remove all event handlers from body - set by activity detector - allows for a cleaner application
+        const activityDetector = createActivityDetector(options)
+        activityDetector.on('idle', () => setIdle(true))
+        activityDetector.on('active', () => setIdle(false))
+        //remove all event handlers from body - set by activity detector
         return () => activityDetector.stop()
-        }, []) // Render on mount
-        return isIdle // Return a boolean value to depict whether the application should be in idle mode
+        }, [])
+        return isIdle
     }
     
-    const isIdle = useIdle({timeToIdle: 3000}); // Set idle mode after 30 seconds 
+    const isIdle = useIdle({timeToIdle: 3000});
 
     return (
         <div className={classes.root}>
@@ -117,8 +116,9 @@ const Header = (allSongs = []) => {
 }
 
 // Retrieve state from redux and map to properties to the component to use inside the component
+// mapping values in the state to the properties 
 const mapStateToProps = state => ({
     allSongs: state.allSongs
 })
-// Connect React component Header to redux to map the redux state to react properties
+
 export default connect(mapStateToProps)(Header);
