@@ -189,9 +189,8 @@ visuallyHidden: {
 }));
 
 const SongsTable = (allSongs = []) => {
-    
+        
     const classes = useStyles();
-    // Setting react hook states
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('title');
     const [selected, setSelected] = React.useState([]);
