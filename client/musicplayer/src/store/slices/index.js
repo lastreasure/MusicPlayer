@@ -89,21 +89,7 @@ export const getPlaylists = () => dispatch => {
 }
 
 function shuffle (arr) {   
-    // console.log("this is the arr " + arr)
-    // let temp = []
-    // console.log(arr.length)
-    // for(let i = arr.length; i > 0; i--){
-    //     const j = Math.floor(Math.random() * i)
-    //     console.log('j: ' + j)
-    //     let temp = arr[i]
-    //     console.log("temp: " + temp)
-    //     arr[i] = arr[j]
-    //     arr[j] = temp
-    //     console.log("from shuff inside " + temp)
-    // }
-    // console.log("from shuff " + temp)
-    // return temp
-
+    
     let tempArr = [...arr];
     for (let i = arr.length; i > 0; i--){ 
         const j = Math.floor(Math.random() * (i));

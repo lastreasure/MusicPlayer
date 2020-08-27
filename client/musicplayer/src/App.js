@@ -2,7 +2,6 @@ import React from 'react';
 import AudioControls from './components/Controls/AudioControls';
 import SongImage from './components/SongDisplay/SongImage';
 import Header from './components/Layout/Header';
-import SongTable from './components/SongDisplay/SongTable'
 import SongsTable from './components/SongDisplay/SongsTable'
 
 import store from './store';
@@ -54,7 +53,6 @@ function App()  {
           <AudioControls/>
         </Grid>
         <Grid item xs={12}>
-          {/* <SongTable/> */}
           <SongsTable/>
         </Grid>
         <Grid item xs={12}>

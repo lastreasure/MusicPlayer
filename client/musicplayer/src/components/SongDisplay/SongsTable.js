@@ -16,27 +16,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from'@material-ui/core/Button'
 import TextField from'@material-ui/core/TextField'
 
-
+// Method for creating the data for the table
 function createData(_id, title, artist) {
 return { _id, title, artist };
 }
-
-// const rows = [
-//     createData(143242,'Cupcake' , 'Cupcake'),
-//     createData(243423, 'Donut','Donut'),
-//     createData(4324233, 'Eclair', 'Eclair'),
-//     createData(4453453, 'Frozen yoghurt', 'Frozen yoghurt'),
-//     createData(543535, 'Gingerbread', 'Gingerbread'),
-// ];
 
 // Sorting columns
 function descendingComparator(a, b, orderBy) {
@@ -48,12 +36,14 @@ if (b[orderBy] > a[orderBy]) {
 }
 return 0;
 }
+
 // Sorting columns
 function getComparator(order, orderBy) {
 return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
+
 // Sorting columns
 function stableSort(array, comparator) {
 const stabilizedThis = array.map((el, index) => [el, index]);
@@ -65,11 +55,13 @@ stabilizedThis.sort((a, b) => {
 return stabilizedThis.map((el) => el[0]);
 }
 
+// Assigning column titles
 const headCells = [
 { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
 { id: 'artist', numeric: false, disablePadding: false, label: 'Artist' },
 ];
 
+// Method props for sorting table 
 function EnhancedTableHead(props) {
 const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
 const createSortHandler = (property) => (event) => {
@@ -123,6 +115,7 @@ orderBy: PropTypes.string.isRequired,
 rowCount: PropTypes.number.isRequired,
 };
 
+// Styling the ToolBar
 const useToolbarStyles = makeStyles((theme) => ({
 root: {
     paddingLeft: theme.spacing(2),
@@ -149,33 +142,19 @@ const { numSelected } = props;
 
 return (
     <Toolbar
-    className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-    })}
-    >
-    {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-        {numSelected} songs selected 
-        </Typography>
-    ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-        Song Library
-        </Typography>
-    )}
-
-    {/* {numSelected > 0 ? (
-        <Tooltip title="Delete">
-        <IconButton aria-label="delete">
-            <DeleteIcon />
-        </IconButton>
-        </Tooltip>
-    ) : (
-        <Tooltip title="Filter list">
-        <IconButton aria-label="filter list">
-            <FilterListIcon />
-        </IconButton>
-        </Tooltip>
-    )} */}
+        className={clsx(classes.root, {
+            [classes.highlight]: numSelected > 0,
+        })}
+        >
+        {numSelected > 0 ? (
+            <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
+            {numSelected} songs selected 
+            </Typography>
+        ) : (
+            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+            Song Library
+            </Typography>
+        )}
     </Toolbar>
 );
 };
@@ -184,6 +163,7 @@ EnhancedTableToolbar.propTypes = {
 numSelected: PropTypes.number.isRequired,
 };
 
+// Styling the table
 const useStyles = makeStyles((theme) => ({
 root: {
     width: '100%',
@@ -208,7 +188,6 @@ visuallyHidden: {
 },
 }));
 
-//////////
 const SongsTable = (allSongs = []) => {
         
     const classes = useStyles();
@@ -222,17 +201,19 @@ const SongsTable = (allSongs = []) => {
 
     const rows = [];
 
+    // pushing data from all songs database to the table
     allSongs.allSongs.forEach((song) => {
         rows.push(createData(song._id, song.title, song.artist)) 
     })
 
-
+    // Method for sorting the table elements
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
+    // Method for setting the selected row item
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
         const newSelecteds = rows.map((n) => n._id);
@@ -242,9 +223,7 @@ const SongsTable = (allSongs = []) => {
         setSelected([]);
     };
 
-    // // state for selecting song id's to add to playlist
-    // let [playlistSongIdList, setPlaylistSongIdList] = useState([]);
-
+    // Method for identifying which row items are selected
     const handleClick = (event, _id) => {
         const selectedIndex = selected.indexOf(_id);
         let newSelected = [];
@@ -263,18 +242,14 @@ const SongsTable = (allSongs = []) => {
         }
 
         setSelected(newSelected);
-
-        // // Collect selected song ids
-        // setPlaylistSongIdList(prevState => [...prevState, selected])
-        //     console.log('this is songs: ' + playlistSongIdList);
-        //     console.log(typeof(playlistSongIdList))
     };
 
-
+    // Method for handling page change
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
+    // Method for assigning rows per page 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -284,24 +259,22 @@ const SongsTable = (allSongs = []) => {
         setDense(event.target.checked);
     };
 
-    const isSelected = (_id) => selected.indexOf(_id) !== -1;
+    const isSelected = (_id) => selected.indexOf(_id) !== -1; 
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-
-    // Set state for playlist name
+    // Set state for assigning the inputted playlist name
     let [playlistNameText, setplaylistNameText] = useState('');
 
-    // Assign text state from text field for the playlist name
+    // Assign text state from text field for the playlist name upon input change
     let handleTextFieldChange = (event) => {
         setplaylistNameText(event.target.value);
     }
-    console.log("this is playlist name:" + playlistNameText)
 
-
+    // Method to create a new playlist
     const createPlaylist = () => {
 
-        if (playlistNameText != '' && selected.length > 0) {
+        if (playlistNameText !== '' && selected.length > 0) {
             fetch('http://localhost:5000/playlists', {
                 method: 'POST',
                 headers: {
@@ -412,7 +385,6 @@ const SongsTable = (allSongs = []) => {
         </div>
     );
 }
-
 
 const mapStateToProps = state => ({
     allSongs: state.allSongs
