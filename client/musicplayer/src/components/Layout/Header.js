@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
@@ -68,14 +67,8 @@ const useStyles = makeStyles((theme) => ({
     },
     }));
 
-    const top100Films = [
-        { title: 'The Shawshank Redemption', year: 1994 },
-        { title: 'The Godfather', year: 1972 },
-    ]
-
 const Header = (allSongs = []) => {
     const classes = useStyles();
-
 
     // Idle mode
     function useIdle(options) {
