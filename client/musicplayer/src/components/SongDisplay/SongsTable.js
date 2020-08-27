@@ -199,8 +199,7 @@ const SongsTable = (allSongs = []) => {
     const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-
-    const rows = [];
+    const rows = []; // Array to fill in table rows
 
     // pushing data from all songs database to the table
     allSongs.allSongs.forEach((song) => {
@@ -241,7 +240,6 @@ const SongsTable = (allSongs = []) => {
             selected.slice(selectedIndex + 1),
         );
         }
-
         setSelected(newSelected);
     };
 
@@ -256,6 +254,7 @@ const SongsTable = (allSongs = []) => {
         setPage(0);
     };
 
+    // Method for changing the table density
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
