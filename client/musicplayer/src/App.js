@@ -3,7 +3,7 @@ import AudioControls from './components/Controls/AudioControls';
 import SongImage from './components/SongDisplay/SongImage';
 import Header from './components/Layout/Header';
 import SongTable from './components/SongDisplay/SongTable'
-// import SongsTable from './components/SongDisplay/SongsTable'
+import SongsTable from './components/SongDisplay/SongsTable'
 
 import store from './store';
 import { getSongs, getPlaylists } from './store/slices';
@@ -54,8 +54,8 @@ function App()  {
           <AudioControls/>
         </Grid>
         <Grid item xs={12}>
-          <SongTable/>
-          {/* <SongsTable/> */}
+          {/* <SongTable/> */}
+          <SongsTable/>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>xs=12</Paper>
