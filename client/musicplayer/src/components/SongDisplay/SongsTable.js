@@ -275,8 +275,9 @@ const SongsTable = (allSongs = []) => {
 
     // Method to create a new playlist
     const createPlaylist = () => {
-
+        // Check that there is an inputted playlist name and at least one song selected  
         if (playlistNameText !== '' && selected.length > 0) {
+            // Fetch POST request to create playlist
             fetch('http://localhost:5000/playlists', {
                 method: 'POST',
                 headers: {
@@ -288,14 +289,13 @@ const SongsTable = (allSongs = []) => {
                     playlistSongId: selected,
                 })
             }).then(function() {
-                alert('playlist created')
+                alert('playlist created') // Notify the user that the playlist has been successfully created
             }).catch(function(err) {
-                alert('error' + err)
+                alert('error' + err) // Notify the user that there has been an error 
             })
         } else {
-            alert('Cannot create playlist with no name or no songs selected')
+            alert('Cannot create playlist with no name or no songs selected') // Notify the user to correct their input
         }
-
     }
 
     return (
@@ -388,8 +388,10 @@ const SongsTable = (allSongs = []) => {
     );
 }
 
+// Mapping slice action function to properties
 const mapStateToProps = state => ({
     allSongs: state.allSongs
 })
 
-export default connect(mapStateToProps)(SongsTable, EnhancedTableHead, EnhancedTableToolbar);
+// Connecting SongsTable component to the redux state and dispatching state to properties in the component
+export default connect(mapStateToProps)(SongsTable);

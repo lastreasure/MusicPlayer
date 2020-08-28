@@ -11,13 +11,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 
-
+// UI Styling
 const useStyles = makeStyles({
     table: {
         minWidth: 500,
     },
 });
 
+// Create data for rows
 function createData(_id, title, artist) {
     return { _id, title, artist};
 }
@@ -25,9 +26,9 @@ function createData(_id, title, artist) {
 const SongTable = (allSongs = []) => {
 
     const classes = useStyles();
-
+    // Create array to be populated by state songs
     const rowsSongs = [];
-
+    // For each song in the array push from the create data function to populate the table rows 
     allSongs.allSongs.forEach((song) => {
         rowsSongs.push(createData(song._id, song.title, song.artist)) 
     })
@@ -56,12 +57,12 @@ const SongTable = (allSongs = []) => {
     );
 }
 
-// Retrieve state from redux and map to properties to the component to use inside the component
-// mapping values in the state to the properties 
+// Mapping values in the state to the properties 
 const mapStateToProps = state => ({
     currentSong: state.currentSong,
     allSongs: state.allSongs
 
 })
 
+// Connecting SongTable component to the redix state and dispatching state to properties in the component
 export default connect(mapStateToProps)(SongTable);

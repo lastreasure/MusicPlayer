@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'; 
-
+// MAterial UI imports
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,8 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 
-
-
+// UI Styling
 const useStyles = makeStyles({
     root: {
         maxWidth: 350,
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
 const SongImage = ({currentSong={}}) => {
 
     const classes = useStyles();
+    // Assigning state from current song
     const image = currentSong.imageSource
     const title = currentSong.title
     const artist = currentSong.artist
@@ -50,12 +50,12 @@ const SongImage = ({currentSong={}}) => {
     
 }
 
-// Retrieve state from redux and map to properties to the component to use inside the component
-// mapping values in the state to the properties 
+// Mapping slice action function to properties
 const mapStateToProps = state => ({
     currentSong: state.currentSong
 })
 
+// Connecting SongImage component to the redux state and dispatching state to properties in the component
 export default connect(mapStateToProps)(SongImage);
 
 

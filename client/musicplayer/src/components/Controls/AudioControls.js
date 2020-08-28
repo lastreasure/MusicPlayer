@@ -120,6 +120,6 @@ const mapDispatchToProps = {
     shuffle: SHUFFLE
 }
 
-// Connecting AudioControls component to the redix state and dispatching state to properties in the component
+// Connecting AudioControls component to the redux state and dispatching state to properties in the component
 export default connect(mapStateToProps, mapDispatchToProps)(AudioControls);
 
